@@ -4,6 +4,7 @@ import InputBar from './components/InputBar.vue'
 import ValuesDisplay from './components/ValuesDisplay.vue'
 import TypesDisplay from './components/TypesDisplay.vue'
 
+import { Executor } from './scripts/sort/Executor'
 import { ValueType } from './scripts/value_type'
 import { Value } from './scripts/value'
 </script>
@@ -48,17 +49,9 @@ export default {
         if (command_and_args.length == 2) {
           const key = command_and_args[0]
           const value = command_and_args[1]
-          if (key == 'type') {
-            this.filter_type = this.getTypeId(value)
-            console.log('Update typeid', this.filter_type)
-            continue
-          } else if (key == 'start') {
-            this.filter_start = value
-            continue
-          } else if (key == 'end') {
-            this.filter_end = value
-            continue
-          }
+          
+          const executor = new Executor()
+          executor.execute(key, value, this)
         }
         console.log('Ignoring command', command)
       }
